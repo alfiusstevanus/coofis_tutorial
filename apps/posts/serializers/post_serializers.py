@@ -38,18 +38,3 @@ class PostSerializers(serializers.ModelSerializer):
 
         return post_instance
 
-class PostDestroySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Post
-        fields =[
-            'id',
-            'title',
-            'body',
-            'creator',
-            'created_at',
-        ]
-
-    def destroy(self, instance):
-        # get_id_Documents = validated_data.get("id")
-        Post.objects.filter(id=instance.id).update(is_deleted=True)

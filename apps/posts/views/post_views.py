@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics,status
 from rest_framework.permissions import IsAuthenticated
-from apps.posts.serializers.post_serializers import PostSerializers,PostDestroySerializer
+from apps.posts.serializers.post_serializers import PostSerializers
 
 from apps.posts.models import Post
 from rest_framework.response import Response
@@ -30,7 +30,7 @@ class PostListCreateAPIView(generics.ListCreateAPIView):
         queryset = Post.objects.filter(creator = user).order_by('-created_at')
         return queryset
     
-class PostRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+class PostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializers
 
@@ -50,17 +50,6 @@ class PostRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
         return Response(serializers.data, status=status.HTTP_200_OK)
 
     
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Post.objects.filter(creator=user)
-        return queryset
-    
-class PostDestroyAPIView(generics.DestroyAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = PostDestroySerializer
-    queryset = Post.objects.all()
-    lookup_field = 'id'
-
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
@@ -68,3 +57,8 @@ class PostDestroyAPIView(generics.DestroyAPIView):
             "Data has been deleted",
             status=status.HTTP_204_NO_CONTENT,
         )
+    
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Post.objects.filter(creator=user)
+        return queryset
