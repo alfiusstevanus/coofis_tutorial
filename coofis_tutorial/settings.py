@@ -112,7 +112,7 @@ WSGI_APPLICATION = 'coofis_tutorial.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-AUTH_USER_MODEL = "accounts.User"
+# AUTH_USER_MODEL = "accounts.User"
 
 
 DATABASES = {
