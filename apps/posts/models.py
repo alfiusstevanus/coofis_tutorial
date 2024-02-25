@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 
 
 class Post(models.Model):
-    creator = models.ForeignKey("accounts.User", on_delete = models.CASCADE, verbose_name=_('creator'), related_name=_('creator_post'))
+    creator = models.ForeignKey(User, on_delete = models.CASCADE, verbose_name=_('creator'), related_name=_('creator_post'))
     title = models.CharField(verbose_name = _('title'),max_length = 100)
     body = models.TextField(verbose_name=_('body'))
     created_at = models.DateTimeField(verbose_name = _('created'),auto_now_add = True)
