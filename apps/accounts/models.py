@@ -27,7 +27,7 @@ class Profile(TimeStampedUUIDModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
-    USERNAME_FIELD = "nim"
+    # USERNAME_FIELD = "nim"
     REQUIRED_FIELDS = ["email"]
 
     objects = CustomUserManager()

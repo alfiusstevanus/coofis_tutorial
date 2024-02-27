@@ -8,12 +8,12 @@ urlpatterns = [
         include(
             [
                 path("login/", auth_views.LoginGenericAPIView.as_view(), name="auth-login"),
+                path("register/", auth_views.RegisterGenericView.as_view(), name="auth-register"),
                 path("refresh/", auth_views.RefreshGenericAPIView.as_view(), name="auth-refresh"),
                 path("logout/", auth_views.LogoutGenericAPIView.as_view(), name="auth-logout"),
             ]
         ),
     ),
-    path("user/",include([
-        path("", user_views.UserRetrieveAPIView.as_view(), name="user-retrieve"),
-    ]))
+    path("", user_views.UserRetrieveAPIView.as_view(), name="user-retrieve"),
+    path("edit/", user_views.UserUpdateAPIView.as_view(), name="user-update"),
 ]

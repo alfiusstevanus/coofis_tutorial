@@ -8,7 +8,6 @@ from django.conf import settings
 from apps.accounts.models import User
 
 class UserLoginSerializer(TokenObtainPairSerializer):
-    nim = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
 
     default_error_messages = {
@@ -21,7 +20,7 @@ class UserLoginSerializer(TokenObtainPairSerializer):
         self.user = None
 
     def validate(self, attrs):
-        self.user = authenticate(nim=attrs.get("nim"), password=attrs.get("password"))
+        self.user = authenticate(username=attrs.get("username"), password=attrs.get("password"))
         if self.user:
             if not self.user.is_active:
                 raise serializers.ValidationError(
@@ -37,7 +36,7 @@ class UserLoginSerializer(TokenObtainPairSerializer):
         refresh = RefreshToken.for_user(self.user)
         life_time = int(refresh.access_token.lifetime.total_seconds())
         response = {
-                "nim": self.user.nim,
+                "username": self.user.username,
                 "email": self.user.email,
                 "token": {
                     "access": str(refresh.access_token),
@@ -76,3 +75,24 @@ class UserRefreshTokenSerializer(TokenRefreshSerializer):
             }
         }
         return response_formated
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    password_confirm = serializers.CharField(write_only=True)
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegisterSerializer, self).__init__(*args, **kwargs)
+        self.user = None
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password','password_confirm']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def validate(self, data):
+        if data['password'] != data.pop('password_confirm'):
+            raise serializers.ValidationError("Password confirmation does not match")
+        return data
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user

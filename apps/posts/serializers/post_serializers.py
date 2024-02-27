@@ -19,7 +19,7 @@ class PostSerializers(serializers.ModelSerializer):
         
     def create(self, validated_data):
         user = self.context.get('user')
-        print(user.nim)
+        print(user.username)
         obj_post = Post.objects.create(
             title = validated_data.get('title'),
             body = validated_data.get('body'),

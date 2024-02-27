@@ -1,7 +1,7 @@
 from django.contrib.auth.models import update_last_login
 from rest_framework import generics, status
 from rest_framework.response import Response
-from apps.accounts.serializers.auth_serializers import UserLoginSerializer, UserRefreshTokenSerializer
+from apps.accounts.serializers.auth_serializers import UserLoginSerializer, UserRefreshTokenSerializer, UserRegisterSerializer
 
 class LoginGenericAPIView(generics.GenericAPIView):
     """user Login"""
@@ -37,4 +37,15 @@ class LogoutGenericAPIView(generics.GenericAPIView):
         response.delete_cookie(key="refresh")
         response.data = {"status": True, "details": {"message": "logout"}}
         response.status = status.HTTP_200_OK
+        response.delete_cookie('jwt')
         return response
+
+class RegisterGenericView(generics.CreateAPIView):
+    serializer_class = UserRegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
