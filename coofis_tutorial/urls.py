@@ -23,6 +23,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include([
         path('account/', include('apps.accounts.urls')),
-        path('post/', include('apps.posts.urls'))
+        path('post/', include('apps.posts.urls')),
+        path('calendar/', include('apps.calendars.urls')),
+        path('event/', include('apps.events.urls')),
+        path('attachment/', include('apps.attachments.urls')),
+
     ]))
 ] 

@@ -16,6 +16,7 @@ class TimeStampedUUIDModel(models.Model):
 
     class Meta:
         abstract = True
+        
 class Profile(TimeStampedUUIDModel):
     class JenisKelamin(models.TextChoices):
         MALE = "Laki-Laki", _("Laki-Laki")
