@@ -1,12 +1,10 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from rest_framework import generics,status
 from rest_framework.permissions import IsAuthenticated
 from apps.posts.serializers.post_serializers import PostSerializers
 
 from apps.posts.models import Post
 from rest_framework.response import Response
-
-# Create your views here.
 
 class PostListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
@@ -20,7 +18,6 @@ class PostListCreateAPIView(generics.ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def list(self, request):
-        # print(request.user)
         data = self.get_queryset()
         serializer = PostSerializers(data, many=True)
         return Response(serializer.data, status = status.HTTP_200_OK)

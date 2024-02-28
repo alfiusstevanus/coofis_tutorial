@@ -1,19 +1,13 @@
 from django.urls import include, path
-from apps.events.views import *
-from django.http import HttpResponse
+from apps.events.views import event_views
+from django.conf import settings
 
 app_name = "events"
 
 urlpatterns = [
-    path("", lambda request: HttpResponse("Hello, Event!")),
+    path("", event_views.EventListCreateAPIView.as_view(), name="event-list"),
+    path("create/", event_views.EventListCreateAPIView.as_view(), name="event-create"),
+    path("<str:id>/", event_views.EventRetrieveUpdateDestroyAPIView.as_view(), name="event-detail"),
+    path("<str:id>/", event_views.EventRetrieveUpdateDestroyAPIView.as_view(), name="event-update"),
+    path("<str:id>/", event_views.EventRetrieveUpdateDestroyAPIView.as_view(), name="event-delete"),
 ]
-
-# urlpatterns = [
-#     path(
-#         "",
-#         include(
-#             [
-#             ]
-#         ),
-#     ),
-# ]
