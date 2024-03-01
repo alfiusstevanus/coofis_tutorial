@@ -1,11 +1,11 @@
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
-from apps.accounts.serializers.user_serializers import UserRetrieveSerilaizer, UserUpdateSerializer
+from apps.accounts.serializers.user_serializers import UserRetrieveSerializer, UserUpdateSerializer
 from rest_framework.response import Response
 
 class UserRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = UserRetrieveSerilaizer
+    serializer_class = UserRetrieveSerializer
 
     def get(self, request):
         user = request.user

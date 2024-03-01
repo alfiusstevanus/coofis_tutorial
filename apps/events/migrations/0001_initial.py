@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ("end_date", models.DateTimeField()),
                 ("agenda", models.TextField()),
                 ("tempat", models.CharField(max_length=255)),
-                ("address_code", models.CharField(max_length=20)),
+                ("dresscode", models.CharField(max_length=20)),
                 (
                     "attachment",
                     models.ForeignKey(

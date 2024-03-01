@@ -1,8 +1,9 @@
-from apps.accounts.models import User
+# from apps.accounts.models import User
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.utils import timezone
 
-class UserRetrieveSerilaizer(serializers.ModelSerializer):
+class UserRetrieveSerializer(serializers.ModelSerializer):
     last_login = serializers.SerializerMethodField()
     date_joined = serializers.SerializerMethodField()
 
@@ -18,16 +19,11 @@ class UserRetrieveSerilaizer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = [
-            "id",
-            "username",
-            "email",
-            "is_superuser",
-            "is_staff",
-            "is_active",
-            "last_login",
-            "date_joined"
-        ]
+        fields = ['id','username','email','date_joined','last_login','is_active']
+        extra_kwargs = {
+            'password':{'write_only': True}
+        }
+        
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
