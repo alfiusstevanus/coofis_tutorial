@@ -28,31 +28,32 @@ class CalendarListCreateAPIView(generics.ListCreateAPIView):
 class CalendarRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [IsAuthenticated]
     serializer_class = CalendarSerializer
+    queryset = Calendar.objects.all()
 
     lookup_field = 'id'
 
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # def retrieve(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def update(self,request,*args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # def update(self,request,*args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance, request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     self.perform_update(serializer)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
     
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(
-            "Calendar has been deleted",
-            status=status.HTTP_204_NO_CONTENT,
-        )
+    # def destroy(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     self.perform_destroy(instance)
+    #     return Response(
+    #         "Calendar has been deleted",
+    #         status=status.HTTP_204_NO_CONTENT,
+    #     )
     
-    def get_queryset(self):
-        user = self.request.user.id
-        queryset = Calendar.objects.all()
-        return queryset
+    # def get_queryset(self):
+    #     user = self.request.user.id
+    #     queryset = Calendar.objects.all()
+    #     return queryset

@@ -31,6 +31,7 @@ class RefreshGenericAPIView(generics.GenericAPIView):
     
 class LogoutGenericAPIView(generics.GenericAPIView):
     """user logout"""
+    serializer_class = UserLoginSerializer
 
     def post(self, _):
         response = Response()

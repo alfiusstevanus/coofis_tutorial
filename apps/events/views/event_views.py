@@ -9,23 +9,24 @@ from rest_framework.response import Response
 class EventListCreateAPIView(generics.ListCreateAPIView):
     # permission_classes = [IsAuthenticated]
     serializer_class = EventSerializer
+    queryset = Event.objects.all().order_by('-start_date')
 
-    def create(self, request):
-        user = request.user
-        serializer = self.get_serializer(data= request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    # def create(self, request):
+    #     user = request.user
+    #     serializer = self.get_serializer(data= request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save()
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def list(self, request):
-        data = self.get_queryset()
-        serializer = EventSerializer(data, many=True)
-        return Response(serializer.data, status = status.HTTP_200_OK)
+    # def list(self, request):
+    #     data = self.get_queryset()
+    #     serializer = EventSerializer(data, many=True)
+    #     return Response(serializer.data, status = status.HTTP_200_OK)
     
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Event.objects.all().order_by('-start_date')
-        return queryset
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     queryset = Event.objects.all().order_by('-start_date')
+    #     return queryset
     
 class EventRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [IsAuthenticated]

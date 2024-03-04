@@ -44,6 +44,8 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
+    # 'rest_framework_swagger',
+    'drf_yasg',
 ]
 
 LOCAL_APPS = [
@@ -97,7 +99,7 @@ ROOT_URLCONF = 'coofis_tutorial.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -172,3 +174,4 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL = '/api/account/auth/login/'
